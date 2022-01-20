@@ -21,13 +21,15 @@ class _NewTransactionState extends State<NewTransaction> {
     final enteredTitle = titleController.text;
     final enteredAmount = double.parse(amountController.text);
 
-  if (enteredAmount <= 0 || enteredTitle.isEmpty){
-    return;
+    if (enteredAmount <= 0 || enteredTitle.isEmpty) {
+      return;
+    }
+
+    widget.addTransaction(
+        titleController.text, double.parse(amountController.text));
+    Navigator.of(context).pop();
   }
 
-    widget.addTransaction(titleController.text, double.parse(amountController.text));
-  Navigator.of(context).pop();
-  }
   @override
   Widget build(BuildContext context) {
     return Card(
