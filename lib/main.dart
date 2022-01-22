@@ -49,25 +49,26 @@ class _MyHomePageState extends State<MyHomePage> {
   // String titleInput;
 
   final List<Transaction> _userTransactions = [
-    Transaction(
-      id: 't1',
-      title: 'Unlimited Package',
-      amount: 700,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Charger',
-      amount: 400,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: 't1',
+    //   title: 'Unlimited Package',
+    //   amount: 700,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'Charger',
+    //   amount: 400,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   List<Transaction> get _recentTransaction {
     return _userTransactions.where((element) {
-      return element.date.isAfter(DateTime.now().subtract(Duration(days: 7)  )) ;
+      return element.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
     }).toList();
   }
+
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
         id: DateTime.now().toString(),
@@ -105,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Chart(),
+            Chart(_recentTransaction),
             TransactionList(_userTransactions),
           ],
         ),
@@ -113,7 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         // backgroundColor: Colors.green.shade500,
-        child: Icon(Icons.add, color: Colors.green.shade100,),
+        child: Icon(
+          Icons.add,
+          color: Colors.green.shade100,
+        ),
         onPressed: () {
           _startAddNewTransaction(context);
         },
