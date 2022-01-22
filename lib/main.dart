@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 
 import './models/transaction.dart';
 import './widgets/transactions_list.dart';
-import './widgets/user_transactions.dart';
 import './widgets/new_transaction.dart';
 import './widgets/chart.dart';
 
@@ -69,12 +68,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(String txTitle, double txAmount, DateTime date) {
     final newTx = Transaction(
         id: DateTime.now().toString(),
         title: txTitle,
         amount: txAmount,
-        date: DateTime.now());
+        date: date);
     setState(() {
       _userTransactions.add(newTx);
     });
@@ -87,6 +86,11 @@ class _MyHomePageState extends State<MyHomePage> {
           return NewTransaction(_addNewTransaction);
         });
   }
+void _deleteTransaction(String id) {
+  setState(() {
+    _userTransactions.removeWhere((element) =>element.id == id);
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Chart(_recentTransaction),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
           ],
         ),
       ),
@@ -116,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // backgroundColor: Colors.green.shade500,
         child: Icon(
           Icons.add,
-          color: Colors.green.shade100,
+          color: Theme.of(context).colorScheme.onBackground,
         ),
         onPressed: () {
           _startAddNewTransaction(context);
